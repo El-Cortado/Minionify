@@ -12,22 +12,29 @@ Possible users of the app are worried parents with their children or strict boss
 
 
 ## Modes
-The Minionify app will have two different modes that it can operate.
-- As A Minion: Minionify will run a background service that will listen for incoming requests from the managers, execute them and send back a response back to the manager.
+The Minionify app will have two different modes that it can operate:
 
-- As A Manager: Minionify will present a GUI to the user that will let them to control their minions apps.
+- As A Minion: Minionify will run a background service that will listen for incoming requests from the managers, execute them and send back the response back to the manager.
+- As A Manager: Minionify will display a GUI to the user that will let them control their minions apps.
 For example, a user can choose one of its minions and get their location, statistics and more...
 
 ## Protocol
 The Minionify app will use Firebase as its server. 
-A manager will be able to send requests to a minion through Firebase (using to Firebase storage), in order to get information about/from the minion.
+A manager will be able to send requests to a minion through Firebase (using the Firebase database), in order to get information about/from the minion.
 
-Each minion will have a main folder that will have two folders nested in it:
-- Requests Folder: the folder where the managers will put the requests for the minion. When a minion withdraws a request, the minion will delete the request file from the requests folder.
-- Answers Folder: the folder where the minion will put its answers back to the manager.
+The app will use Firebase's Realtime Database that will allow minions and managers to get realtime updates about data that has been inserted into the database (requests/responses).
+The database will contain a requests path and a responses path. Each minion will have a path nested in the requests path that will contain all of its requests. When a minion will be notified
+of request that has been inserted, it will delete the request from the requests path, run the request and put the response back in the repsonses path under the minion's id (responses/{minionId}/response_1).
+
+### Requests And Responses Structure
+The requests and responses will be a serialized Java object (Request/Response).
+
+### Retrieving Big Data
+In case the response will contain data like files, than the response entry will contain metadata of the response attached data:
+- Files: A path to the file in Firebase's storage.
 
 ## Components
 ### The Minions' Background Service
-The Minions' Background Service will be responsible every FETCH_INTERVAL (configurable) seconds to check if a new request had been registered for the minion.
-Once the service has withdrew a request from the manager, it is responsible to delete the request from the minion's requests folder.
-After withdrawing the request, the service will run the request and put the answer in the minion's answers folder.
+The Minions' Background Service will be responsible to listen for incoming requests registered for the minion.
+Once the service has withdrew a request from the manager, it is responsible to delete the request from the minion's requests path.
+After withdrawing the request, the service will run the request and put the response in the minion's responses path and in the storage (if needed).
