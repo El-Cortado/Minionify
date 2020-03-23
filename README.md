@@ -29,8 +29,8 @@ of request that has been inserted, it will delete the request from the requests 
 ### Requests And Responses Structure
 The requests and responses will be serialized Java object (Request/Response).
 
-### Retrieving Big Data
-The DB can contain references to the storage for big data.
+### Retrieving Large Data
+The DB can contain references to the storage for Large data.
 
 ## Components
 ### The Minions' Background Service
