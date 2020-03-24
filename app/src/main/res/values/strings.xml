@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Minionify</string>
+    <string name="welcome_to_minionify">Welcome To Minionify</string>
+    <string name="welcome_secondary">As what would you like to proceed?</string>
+    <string name="manager_option">Manager</string>
+    <string name="minion_option">Minion</string>
+</resources>
