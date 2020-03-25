@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar">
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".ModeChoiceActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">

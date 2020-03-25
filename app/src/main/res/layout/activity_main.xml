@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/welcome_screen_wallpaper"
-    tools:context=".WelcomeActivity">
+    tools:context=".appMode.ModeChoiceActivity">
 
 
     <Button
@@ -17,6 +17,7 @@
         android:layout_marginEnd="30dp"
         android:text="@string/manager_option"
         android:textColor="#000000"
+        android:onClick="onAppModeChosen"
         app:backgroundTint="@color/colorPrimary"
         app:cornerRadius="15dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,6 +33,7 @@
         android:layout_marginEnd="10dp"
         android:text="@string/minion_option"
         android:textColor="#000000"
+        android:onClick="onAppModeChosen"
         app:backgroundTint="@color/colorPrimary"
         app:cornerRadius="15dp"
         app:layout_constraintEnd_toStartOf="@+id/manager_button"
