@@ -8,21 +8,22 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.cortado.minionify.accumulators.IAccumulator;
+import com.cortado.minionify.accumulators.PreferencesFiles;
+import com.cortado.minionify.accumulators.Preferences;
 import com.cortado.minionify.mode.AppMode;
-import com.cortado.minionify.preference.AppModePreferenceManager;
+import com.cortado.minionify.accumulators.PreferenceAccumulator;
 
 public class ModeChoiceActivity extends AppCompatActivity {
 
-    private AppModePreferenceManager mAppModePreferenceManager;
-
-    private static final String GENERAL_PREFERENCES = "generalPreferences";
+    private IAccumulator mAccumulator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mAppModePreferenceManager = new AppModePreferenceManager(getSharedPreferences(GENERAL_PREFERENCES, Context.MODE_PRIVATE));
+        mAccumulator = new PreferenceAccumulator(getSharedPreferences(PreferencesFiles.GENERAL_PREFERENCES, Context.MODE_PRIVATE));
         redirectActivityIfModeExists();
 
         Window window = getWindow();
@@ -43,7 +44,7 @@ public class ModeChoiceActivity extends AppCompatActivity {
     }
 
     private void redirectActivityIfModeExists() {
-        if (mAppModePreferenceManager.isAppModeExists()) {
+        if (mAccumulator.exists(Preferences.APP_MODE_PREFERENCE_KEY)) {
             AppMode appMode = getAppMode();
             redirectActivity(appMode);
             findViewById(R.id.manager_button).setEnabled(false);
@@ -52,7 +53,7 @@ public class ModeChoiceActivity extends AppCompatActivity {
     }
 
     private AppMode getAppMode() {
-        return mAppModePreferenceManager.getAppMode();
+        return AppMode.valueOf(mAccumulator.get(Preferences.APP_MODE_PREFERENCE_KEY));
     }
 
     private void redirectActivity(AppMode appMode) {
@@ -68,7 +69,7 @@ public class ModeChoiceActivity extends AppCompatActivity {
             appMode = AppMode.MANAGER;
         }
 
-        mAppModePreferenceManager.setAppMode(appMode);
+        mAccumulator.set(Preferences.APP_MODE_PREFERENCE_KEY, appMode.getValue());
         redirectActivity(appMode);
     }
 }
