@@ -5,33 +5,25 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.cortado.minionify.mode.AppMode;
-import com.cortado.minionify.mode.exceptions.ModeNotExistsException;
-import com.cortado.minionify.preference.PreferencesSingleton;
-import com.cortado.minionify.R;
-import com.cortado.minionify.preference.exceptions.PreferenceOperationFailure;
+import com.cortado.minionify.preference.AppModePreferenceManager;
 
 public class ModeChoiceActivity extends AppCompatActivity {
 
-    private PreferencesSingleton mPreferences;
+    private AppModePreferenceManager mAppModePreferenceManager;
+
+    private static final String GENERAL_PREFERENCES = "generalPreferences";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mPreferences = PreferencesSingleton.getInstance(getPreferences(Context.MODE_PRIVATE));
-
-        AppMode appMode = getAppMode();
-        if (appMode != null) {
-            redirectActivity(appMode);
-            findViewById(R.id.manager_button).setOnClickListener(null);
-            findViewById(R.id.minion_button).setOnClickListener(null);
-        }
+        mAppModePreferenceManager = new AppModePreferenceManager(getSharedPreferences(GENERAL_PREFERENCES, Context.MODE_PRIVATE));
+        redirectActivityIfModeExists();
 
         Window window = getWindow();
         setStatusBarTranslucent(window);
@@ -50,29 +42,33 @@ public class ModeChoiceActivity extends AppCompatActivity {
         window.setAttributes(winParams);
     }
 
-    private AppMode getAppMode() {
-        try {
-            return mPreferences.getAppMode();
-        } catch (ModeNotExistsException e) {
-            return null;
+    private void redirectActivityIfModeExists() {
+        if (mAppModePreferenceManager.isAppModeExists()) {
+            AppMode appMode = getAppMode();
+            redirectActivity(appMode);
+            findViewById(R.id.manager_button).setEnabled(false);
+            findViewById(R.id.minion_button).setEnabled(false);
         }
+    }
+
+    private AppMode getAppMode() {
+        return mAppModePreferenceManager.getAppMode();
     }
 
     private void redirectActivity(AppMode appMode) {
-        // redirect to the right activity
+        // todo: redirect to the right activity
     }
 
-    public void onAppModeChosen(View view) {
-        try {
-            if (view.getId() == R.id.minion_button) {
-                mPreferences.setAppMode(AppMode.MINION);
-                redirectActivity(AppMode.MINION);
-            } else if (view.getId() == R.id.manager_button) {
-                mPreferences.setAppMode(AppMode.MANAGER);
-                redirectActivity(AppMode.MANAGER);
-            }
-        } catch (PreferenceOperationFailure e) {
-            Toast.makeText(this, "Internal Error: Couldn't choose mode", Toast.LENGTH_LONG).show();
+    public synchronized void onAppModeChosen(View view) {
+        AppMode appMode;
+
+        if (view.getId() == R.id.minion_button) {
+            appMode = AppMode.MINION;
+        } else {
+            appMode = AppMode.MANAGER;
         }
+
+        mAppModePreferenceManager.setAppMode(appMode);
+        redirectActivity(appMode);
     }
 }
