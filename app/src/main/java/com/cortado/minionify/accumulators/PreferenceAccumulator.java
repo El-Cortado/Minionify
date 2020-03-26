@@ -2,12 +2,12 @@ package com.cortado.minionify.accumulators;
 
 import android.content.SharedPreferences;
 
-import com.cortado.minionify.mode.AppMode;
+import com.cortado.minionify.accumulators.exceptions.KeyDoesNotExists;
 
-public class PreferenceAccumulator implements IAccumulator {
+public class PreferenceAccumulator implements Accumulator {
     private SharedPreferences mPreferences;
 
-    private static final String KEY_NOT_FOUND_DEFAULT_VALUE = " ";
+    private static final String KEY_NOT_FOUND_DEFAULT_VALUE = "%%!$";
 
     public PreferenceAccumulator(SharedPreferences prefs) {
         mPreferences = prefs;
@@ -22,6 +22,10 @@ public class PreferenceAccumulator implements IAccumulator {
 
     @Override
     public String get(String key) {
+        if (!exists(key)) {
+            throw new KeyDoesNotExists();
+        }
+
         return mPreferences.getString(key, KEY_NOT_FOUND_DEFAULT_VALUE);
     }
 
