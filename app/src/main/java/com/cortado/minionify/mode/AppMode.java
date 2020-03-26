@@ -1,8 +1,8 @@
 package com.cortado.minionify.mode;
 
 public enum AppMode {
-    MINION("Minion"),
-    MANAGER("Manager");
+    MINION("MINION"),
+    MANAGER("MANAGER");
 
     private String mValue;
 
