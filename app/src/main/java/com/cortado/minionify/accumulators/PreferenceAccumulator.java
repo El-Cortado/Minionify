@@ -2,6 +2,8 @@ package com.cortado.minionify.accumulators;
 
 import android.content.SharedPreferences;
 
+import com.cortado.minionify.accumulators.exceptions.KeyDoesNotExists;
+
 public class PreferenceAccumulator implements Accumulator {
     private SharedPreferences mPreferences;
 
@@ -19,7 +21,7 @@ public class PreferenceAccumulator implements Accumulator {
     }
 
     @Override
-    public int get(String key) {
+    public int get(String key) throws KeyDoesNotExists {
         if (!exists(key)) {
             throw new KeyDoesNotExists();
         }

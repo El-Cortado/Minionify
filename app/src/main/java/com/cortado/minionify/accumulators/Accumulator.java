@@ -6,4 +6,3 @@ public interface Accumulator {
     boolean exists(String key);
 }
 
-class KeyDoesNotExists extends RuntimeException {}

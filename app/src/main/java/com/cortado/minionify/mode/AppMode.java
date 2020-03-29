@@ -15,13 +15,12 @@ public enum AppMode {
     }
 
     public static AppMode fromValue(int value) {
-        switch (value) {
-            case 1:
-                return MINION;
-            case 2:
-                return MANAGER;
-            default:
-                throw new IllegalArgumentException("There is no AppMode with the value of " + value);
+        for (AppMode mode: AppMode.values()) {
+            if (mode.mValue == value) {
+                return mode;
+            }
         }
+
+        throw new IllegalArgumentException();
     }
 }
