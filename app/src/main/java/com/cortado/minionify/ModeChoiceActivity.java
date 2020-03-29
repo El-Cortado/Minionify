@@ -24,7 +24,7 @@ public class ModeChoiceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mAccumulator = new PreferenceAccumulator(getSharedPreferences(PreferencesFiles.GENERAL_PREFERENCES, Context.MODE_PRIVATE));
-        redirectActivityIfModeExists();
+        redirectActivityIfModeChosen();
         setTranslucentWindowBars();
     }
 
@@ -46,7 +46,7 @@ public class ModeChoiceActivity extends AppCompatActivity {
         window.setAttributes(winParams);
     }
 
-    private void redirectActivityIfModeExists() {
+    private void redirectActivityIfModeChosen() {
         if (mAccumulator.exists(Preferences.APP_MODE_KEY)) {
             redirectActivity(getAppMode());
             findViewById(R.id.manager_button).setEnabled(false);
@@ -55,7 +55,7 @@ public class ModeChoiceActivity extends AppCompatActivity {
     }
 
     private AppMode getAppMode() {
-        return AppMode.valueOf(mAccumulator.get(Preferences.APP_MODE_KEY));
+        return AppMode.fromValue(mAccumulator.get(Preferences.APP_MODE_KEY));
     }
 
     private void redirectActivity(AppMode appMode) {

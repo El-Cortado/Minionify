@@ -1,16 +1,27 @@
 package com.cortado.minionify.mode;
 
 public enum AppMode {
-    MINION("MINION"),
-    MANAGER("MANAGER");
+    MINION(1),
+    MANAGER(2);
 
-    private final String mValue;
+    private final int mValue;
 
-    AppMode(String value) {
+    AppMode(int value) {
         mValue = value;
     }
 
-    public String getValue() {
+    public int getValue() {
         return mValue;
+    }
+
+    public static AppMode fromValue(int value) {
+        switch (value) {
+            case 1:
+                return MINION;
+            case 2:
+                return MANAGER;
+            default:
+                throw new IllegalArgumentException("There is no AppMode with the value of " + value);
+        }
     }
 }
