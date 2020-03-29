@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/welcome_screen_wallpaper"
+    tools:context=".appMode.ModeChoiceActivity">
+
+
+    <Button
+        android:id="@+id/manager_button"
+        android:layout_width="146dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="110dp"
+        android:layout_marginEnd="30dp"
+        android:text="@string/manager_option"
+        android:textColor="#000000"
+        android:onClick="onAppModeChosen"
+        app:backgroundTint="@color/colorPrimary"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/minion_button"
+        app:layout_constraintTop_toTopOf="@+id/welcome_text" />
+
+    <Button
+        android:id="@+id/minion_button"
+        android:layout_width="146dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="110dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/minion_option"
+        android:textColor="#000000"
+        android:onClick="onAppModeChosen"
+        app:backgroundTint="@color/colorPrimary"
+        app:cornerRadius="15dp"
+        app:layout_constraintEnd_toStartOf="@+id/manager_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/welcome_text" />
+
+    <TextView
+        android:id="@+id/welcome_text"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="596dp"
+        android:text="@string/welcome_to_minionify"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/welcome_secondary_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:text="@string/welcome_secondary"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/welcome_text" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
